@@ -48,7 +48,7 @@ public class ServerThread extends Thread {
 
                     UserArray.insert(user);
 
-                    outToClient.writeBytes("Server| OK: Write 'Server| HELP' to get server's commands\n");
+                    outToClient.writeBytes("Server| OK: (Write 'Server| HELP' to get server's commands)\n");
 
                     break;
                 } else {
@@ -76,7 +76,7 @@ public class ServerThread extends Thread {
     }
     public void close(String msg) {
         if(msg.equals(" EXIT")) {
-            if(UserArray.remove(user.getUsername())) {
+            if(UserArray.remove(user)) {
                 try {
                     outToClient = new DataOutputStream(user.getUserSocket().getOutputStream());
 
@@ -131,7 +131,9 @@ public class ServerThread extends Thread {
                 outToClient = new DataOutputStream(user.getUserSocket().getOutputStream());
 
                 if (msg.equals(" HELP")) {
-                    outToClient.writeBytes("Server| Write 'Server| LIST' to get user's list. 'Server| EXIT' to exit from server\n");
+                    outToClient.writeBytes("Server| Write\n");
+                    outToClient.writeBytes("\tServer| LIST to get user's list.\n");
+                    outToClient.writeBytes("\tServer| EXIT to exit from server\n");
                 }
                 else if (msg.equals(" LIST")) {
                     outToClient.writeBytes(UserArray.nameList() + '\n');

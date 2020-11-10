@@ -94,4 +94,7 @@ public class UserArray {
 
         return str;
     }
+    public static boolean remove(UserData user) {
+        return userArray.remove(user);
+    }
 }
