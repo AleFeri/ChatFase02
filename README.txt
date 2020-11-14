@@ -1,5 +1,3 @@
-Diagramma dei casi d'uso: https://lucid.app/invitations/accept/54377dac-7991-4817-9761-60bc8036b69b
-
 Utente:
     - l'username deve rispettare la regex "^[a-zA-Z0-9._-]{3,20}$" (es: "Usr1")
         - Non ci posso essere onimie: 2 o piu' utenti non possono avere lo stesso username (non gestite dal client)
