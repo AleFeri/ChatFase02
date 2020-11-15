@@ -15,7 +15,6 @@ public class Client {
     private Socket localSocket;
     private BufferedReader keyboard;
     private ClientRecive threadRecive;
-    private ClientSend threadSend;
     private UserGUI usrGUI;
     DataOutputStream outToServer;
 
@@ -83,8 +82,6 @@ public class Client {
                     System.out.println(str);
 
                     do {
-                        //clientName = keyboard.readLine();
-
                         clientName = JOptionPane.showInputDialog("Insert Username");
 
                         if(!validUserName(clientName)) {
@@ -103,7 +100,6 @@ public class Client {
                         System.out.println(str);
 
                         threadRecive = new ClientRecive(this);
-                        //threadSend = new ClientSend(this);
                     }
                 }
                 if (str.equals("Server| User taken")) {
@@ -116,11 +112,9 @@ public class Client {
 
             } while (str.equals("Server| User taken"));
 
-            //usrGUI = new UserGUI(this);
             createUserGUI();
 
             threadRecive.start();
-            //threadSend.start();
         }
         catch (IOException e) {
             System.out.println(e);
@@ -140,7 +134,6 @@ public class Client {
     }
     public void kill() {
         threadRecive.kill();
-        threadSend.kill();
     }
 
     //Main

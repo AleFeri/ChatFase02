@@ -32,7 +32,7 @@ public class UserGUI {
             public void actionPerformed(ActionEvent e) {
                 String msg = destinatarioTextField.getText() + "| " + messaggioTextField.getText();
                 System.out.println(msg);
-                append(msg);
+                append(client.getClientName() + msg.substring(msg.indexOf("|")));
                 client.send(msg);
                 try {
                     outToServer.writeBytes(msg + "\n");
