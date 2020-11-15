@@ -68,6 +68,18 @@ public class ServerThread extends Thread {
 
                 String reciver = UserArray.searchUser(stringFromUser);
 
+                if (reciver.equals("")) {
+                    UserArray.getUserArray().remove(UserArray.get(UserArray.getUserPos(user.getUsername())));
+
+                    for(UserData u: UserArray.getUserArray()) {
+                        reciver += u.getUsername();
+                        if(UserArray.getUserArray().indexOf(u) != UserArray.getUserArray().size() - 1)
+                            reciver += ", ";
+                    }
+
+                    reciver = UserArray.nameList();
+                }
+
                 sendTo(reciver, stringFromUser.substring(stringFromUser.indexOf("|") + 1));
 
             } catch (IOException e) {

@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataOutputStream;
-import java.io.IOException;
 
 public class UserGUI {
     private JPanel panel1;
@@ -11,7 +9,6 @@ public class UserGUI {
     private JButton sendBtn;
     public JTextArea ricevutiTextArea;
     private Client client;
-    DataOutputStream outToServer;
 
     public JPanel getPanel1() {
         return panel1;
@@ -21,24 +18,13 @@ public class UserGUI {
         this.client = client;
         ricevutiTextArea.setEditable(false);
 
-        try {
-            outToServer = new DataOutputStream(this.client.getLocalSocket().getOutputStream());
-        } catch (IOException ex) {
-            System.out.println("Error: IOInstrauration");
-        }
-
         sendBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String msg = destinatarioTextField.getText() + "| " + messaggioTextField.getText();
                 System.out.println(msg);
-                append(client.getClientName() + msg.substring(msg.indexOf("|")));
+                append("Tu" + msg.substring(msg.indexOf("|")));
                 client.send(msg);
-                try {
-                    outToServer.writeBytes(msg + "\n");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
             }
         });
     }

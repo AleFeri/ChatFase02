@@ -130,6 +130,7 @@ public class Client {
         frame.pack();
         frame.setResizable(false);
         frame.setSize(500,600);
+        frame.setBackground(Color.BLACK);
         frame.setVisible(true);
     }
     public void kill() {
