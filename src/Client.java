@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class Client {
     public String read() throws IOException {
         return keyboard.readLine();
     }
-    private boolean validUserName(String userName) {
+    public boolean validUserName(String userName) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9._-]{3,20}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(userName);
         return matcher.find();
@@ -71,9 +72,17 @@ public class Client {
                     System.out.println(str);
 
                     do {
-                        clientName = keyboard.readLine();
-                        if(!validUserName(clientName))
+                        //clientName = keyboard.readLine();
+
+                        clientName = JOptionPane.showInputDialog("Insert Username");
+
+                        if(!validUserName(clientName)) {
                             System.out.println("System| Invalid username. Please retry");
+                            JOptionPane.showMessageDialog(new JFrame(),
+                                    "Wrong Username syntax.",
+                                    "Error!",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
                     } while (!validUserName(clientName));
 
                     ots.writeBytes(clientName + '\n');
