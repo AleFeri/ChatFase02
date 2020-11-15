@@ -126,7 +126,7 @@ public class Client {
             System.out.println(e);
         }
 
-        return false;
+        return true;
     }
     private void createUserGUI() {
         usrGUI = new UserGUI(this);

@@ -44,7 +44,7 @@ public class UserGUI {
     }
 
     public void append(String msg) {
-        ricevutiTextArea.append("\n" + msg);
+        ricevutiTextArea.append(msg + "\n");
     }
 
     /*
