@@ -51,7 +51,8 @@ public class ServerThread extends Thread {
                     outToClient.writeBytes("Server| OK: (Write 'Server| HELP' to get server's commands)\n");
 
                     break;
-                } else {
+                }
+                if (UserArray.isRegistered(stringFromUser)) {
                     outToClient.writeBytes("Server| User taken\n");
                 }
             }

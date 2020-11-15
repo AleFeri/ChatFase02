@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class Client {
     private BufferedReader keyboard;
     private ClientRecive threadRecive;
     private ClientSend threadSend;
+    private UserGUI usrGUI;
+    DataOutputStream outToServer;
 
     //Getter
     public String getClientName() {
@@ -36,7 +39,7 @@ public class Client {
         try {
             localSocket = new Socket(serverName, serverPort);
 
-            DataOutputStream outToServer = new DataOutputStream(this.localSocket.getOutputStream());
+            outToServer = new DataOutputStream(this.localSocket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(this.localSocket.getInputStream()));
 
             boolean registered = false;
@@ -52,6 +55,14 @@ public class Client {
     //Metodi
     public void print(String string) {
         System.out.println(string);
+        usrGUI.append(string);
+    }
+    public void send(String msg) {
+        try {
+            outToServer.writeBytes(msg + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public String read() throws IOException {
         return keyboard.readLine();
@@ -92,22 +103,40 @@ public class Client {
                         System.out.println(str);
 
                         threadRecive = new ClientRecive(this);
-                        threadSend = new ClientSend(this);
+                        //threadSend = new ClientSend(this);
                     }
                 }
-                else if (str.equals("Server| User taken")) {
+                if (str.equals("Server| User taken")) {
                     System.out.println(str);
+                    JOptionPane.showMessageDialog(new JFrame(),
+                            "Username taken.",
+                            "Error!",
+                            JOptionPane.ERROR_MESSAGE);
                 }
 
             } while (str.equals("Server| User taken"));
 
+            //usrGUI = new UserGUI(this);
+            createUserGUI();
+
             threadRecive.start();
-            threadSend.start();
+            //threadSend.start();
         }
         catch (IOException e) {
             System.out.println(e);
         }
+
         return false;
+    }
+    private void createUserGUI() {
+        usrGUI = new UserGUI(this);
+        JFrame frame = new JFrame(this.clientName);
+        frame.setContentPane(usrGUI.getPanel1());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setResizable(false);
+        frame.setSize(500,600);
+        frame.setVisible(true);
     }
     public void kill() {
         threadRecive.kill();
